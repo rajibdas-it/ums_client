@@ -11,7 +11,7 @@ interface IInput {
   value?: string | string[] | undefined;
   id?: string;
   placeholder?: string;
-  validation: Record<string, unknown>;
+  validation?: Record<string, unknown>;
 }
 
 const FormInput = ({
@@ -32,16 +32,27 @@ const FormInput = ({
       <Controller
         control={control}
         name={name}
-        render={({ field }) => (
-          <Input
-            type={type}
-            size={size}
-            placeholder={placeholder}
-            {...field}
-            value={value ? value : field.value}
-            id={id}
-          />
-        )}
+        render={({ field }) =>
+          type === "password" ? (
+            <Input.Password
+              type={type}
+              size={size}
+              placeholder={placeholder}
+              {...field}
+              value={value ? value : field.value}
+              id={id}
+            />
+          ) : (
+            <Input
+              type={type}
+              size={size}
+              placeholder={placeholder}
+              {...field}
+              value={value ? value : field.value}
+              id={id}
+            />
+          )
+        }
       />
     </>
   );
