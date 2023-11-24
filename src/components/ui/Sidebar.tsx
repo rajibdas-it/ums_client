@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { MenuProps } from "antd";
 import { USER_ROlE } from "@/constants/role";
 import { sidebarItems } from "@/constants/sidebarItems";
+import { getUserInfo } from "@/services/auth.service";
 
 const { Sider } = Layout;
 
@@ -11,7 +12,7 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const role = USER_ROlE.ADMIN;
+  const { role } = getUserInfo() as any;
   return (
     <Sider
       collapsible
@@ -36,7 +37,7 @@ const Sidebar = () => {
           marginBottom: "1rem",
         }}
       >
-        PH-University
+        UMS
       </div>
       <Menu
         theme="dark"
