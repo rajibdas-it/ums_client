@@ -5,6 +5,7 @@ import Contents from "@/components/ui/Contents";
 import { isLoggedIn } from "@/services/auth.service";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/ui/Loading";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }, [router, userLoggedIn]);
 
   if (!isLoading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   return (

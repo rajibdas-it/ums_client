@@ -1,11 +1,8 @@
+import Loading from "@/components/ui/Loading";
 import React from "react";
 
-const loading = () => {
-  return (
-    <div>
-      <h3>Loading.....</h3>
-    </div>
-  );
+const loadingPage = () => {
+  return <Loading />;
 };
 
-export default loading;
+export default loadingPage;
