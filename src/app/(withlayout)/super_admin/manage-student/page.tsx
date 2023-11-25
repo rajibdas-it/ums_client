@@ -1,3 +1,4 @@
+import ActionBar from "@/components/ui/ActionBar";
 import { Button } from "antd";
 import Link from "next/link";
 import React from "react";
@@ -5,11 +6,19 @@ import React from "react";
 const ManageStudent = () => {
   return (
     <div>
-      <h1>Manage Student Page</h1>
-      <Link href="/super_admin/manage-student/create">
-        {" "}
-        <Button type="primary">Create Student</Button>
-      </Link>
+      <ActionBar title="Student List">
+        <Link href="/super_admin/manage-student/create">
+          {" "}
+          <Button
+            type="primary"
+            style={{
+              margin: "10px 5px",
+            }}
+          >
+            Create Student
+          </Button>
+        </Link>
+      </ActionBar>
     </div>
   );
 };
