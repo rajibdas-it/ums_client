@@ -8,7 +8,7 @@ const ManageStudent = () => {
       <h1>Manage Student Page</h1>
       <Link href="/super_admin/manage-student/create">
         {" "}
-        <Button>Create Student</Button>
+        <Button type="primary">Create Student</Button>
       </Link>
     </div>
   );
