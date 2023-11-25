@@ -25,15 +25,12 @@ const Headers = () => {
         </Button>
       ),
     },
-    {
-      key: "1",
-      label: <p>ID:{user?.id}</p>,
-    },
   ];
 
   return (
     <Header>
       <Row justify="end" align="middle" style={{ height: "100%" }}>
+        <p style={{ color: "white", marginRight: "1rem" }}>{user?.role}</p>
         <Dropdown menu={{ items }}>
           <a href="">
             <Space wrap size={16}>

@@ -1,14 +1,9 @@
 "use client";
 import { Layout, Menu } from "antd";
 import { useState } from "react";
-import type { MenuProps } from "antd";
-import { USER_ROlE } from "@/constants/role";
 import { sidebarItems } from "@/constants/sidebarItems";
 import { getUserInfo } from "@/services/auth.service";
-
 const { Sider } = Layout;
-
-type MenuItem = Required<MenuProps>["items"][number];
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -35,6 +30,7 @@ const Sidebar = () => {
           textAlign: "center",
           fontWeight: "bold",
           marginBottom: "1rem",
+          padding: "1rem",
         }}
       >
         UMS
