@@ -19,3 +19,11 @@ export type IGenericErrorResponse = {
   message: string;
   errorMessage: IGenericErrorMessages[];
 };
+
+export type IDepartments = {
+  createdAt: string;
+  id: string;
+  title: string;
+  updatedAt: string;
+  __v: number;
+};

@@ -1,11 +1,17 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/UMTable";
+import { useGetDepartmentsQuery } from "@/redux/api/departmentApi";
 import { Button } from "antd";
 import Link from "next/link";
 import React from "react";
 
 const DepartmentPage = () => {
+  const query = {};
+  const { data, isLoading } = useGetDepartmentsQuery({ ...query });
+
+  const { departments, meta } = data;
+
   const columns = [
     {
       title: "Name",
@@ -29,7 +35,7 @@ const DepartmentPage = () => {
       },
     },
   ];
-  const data = [
+  const dataSource = [
     {
       key: "1",
       name: "John Brown",
@@ -79,7 +85,7 @@ const DepartmentPage = () => {
       <UMTable
         loading={false}
         columns={columns}
-        data={data}
+        data={dataSource}
         pageSize={5}
         totalPage={10}
         showSizeChanger={true}
