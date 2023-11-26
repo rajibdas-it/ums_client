@@ -1,4 +1,5 @@
 "use client";
+import { adminSchema } from "@/Schemas/admin";
 import FormDatePicker from "@/components/form/FormDatePicker";
 import FormInput from "@/components/form/FormInput";
 import FromSelectField from "@/components/form/FormSelectField";
@@ -10,6 +11,7 @@ import {
   departmentOptions,
   genderOptions,
 } from "@/constants/global";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row } from "antd";
 import React from "react";
 
@@ -26,7 +28,7 @@ const CreateAdminPage = () => {
       <h1>Create Admin</h1>
 
       <div>
-        <From submitHandler={onSubmit}>
+        <From submitHandler={onSubmit} resolver={yupResolver(adminSchema)}>
           <div
             style={{
               border: "1px solid #d9d9d9",
