@@ -3,16 +3,19 @@ import FormInput from "@/components/form/FormInput";
 import From from "@/components/form/From";
 import { useAddDepartmentMutation } from "@/redux/api/departmentApi";
 import { Button, Col, Row, message } from "antd";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const CreateDepartment = () => {
+  const router = useRouter();
   const [addDepartment] = useAddDepartmentMutation();
 
   const createDepartmentHandler = async (data: any) => {
     message.loading("Createing...");
     try {
       await addDepartment(data);
-      message.success("Department created successfully");
+      await message.success("Department created successfully");
+      router.push("/super_admin/department/");
     } catch (error: any) {
       console.log(error);
       message.error(error);

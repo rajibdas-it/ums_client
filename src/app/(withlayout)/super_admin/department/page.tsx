@@ -1,17 +1,20 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/UMTable";
-import { useGetDepartmentsQuery } from "@/redux/api/departmentApi";
-import { Button, Input } from "antd";
+import {
+  useDeleteDepartmentMutation,
+  useGetDepartmentsQuery,
+} from "@/redux/api/departmentApi";
+import { Button, Input, message } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
 import {
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { useDebounced } from "@/redux/hooks";
+import dayjs, { Dayjs } from "dayjs";
 
 const DepartmentPage = () => {
   const query: Record<string, any> = {};
@@ -37,10 +40,20 @@ const DepartmentPage = () => {
 
   const { data, isLoading } = useGetDepartmentsQuery({ ...query });
 
+  const [deleteDepartment] = useDeleteDepartmentMutation();
+
   const departments = data?.departments;
   const meta = data?.meta;
 
-  console.log(departments);
+  const handleDeleteDepartment = async (id: string) => {
+    message.loading("Deleting...");
+    try {
+      await deleteDepartment(id);
+      await message.success("Delete department successfully");
+    } catch (error: any) {
+      message.error(error);
+    }
+  };
 
   const columns = [
     {
@@ -52,6 +65,9 @@ const DepartmentPage = () => {
       title: "Created At",
       dataIndex: "createdAt",
       sorter: (a: any, b: any) => a.title - b.title,
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
     },
 
     {
@@ -59,17 +75,16 @@ const DepartmentPage = () => {
       render: function (data: Record<string, any>) {
         return (
           <>
-            <Button onClick={() => console.log(data)} type="primary">
-              <EyeOutlined />
-            </Button>
+            <Link href={`/super_admin/department/edit/${data?.id}`}>
+              <Button style={{ margin: "0 5px" }} type="primary">
+                <EditOutlined />
+              </Button>
+            </Link>
             <Button
-              style={{ margin: "0 5px" }}
-              onClick={() => console.log(data)}
+              onClick={() => handleDeleteDepartment(data?.id)}
               type="primary"
+              danger
             >
-              <EditOutlined />
-            </Button>
-            <Button onClick={() => console.log(data)} type="primary" danger>
               <DeleteOutlined />
             </Button>
           </>
