@@ -5,7 +5,7 @@ import React from "react";
 type UMTableProps = {
   loading?: boolean;
   columns: any;
-  data: any;
+  dataSource: any;
   pageSize?: number;
   totalPage?: number;
   showSizeChanger?: boolean;
@@ -17,7 +17,7 @@ type UMTableProps = {
 const UMTable = ({
   loading,
   columns,
-  data,
+  dataSource,
   pageSize,
   totalPage,
   showSizeChanger,
@@ -37,9 +37,15 @@ const UMTable = ({
 
   return (
     <Table
+      style={{
+        border: "1px solid #d9d9d9",
+        borderRadius: "5px",
+        padding: "15px",
+        marginBottom: "10px",
+      }}
       loading={false}
       columns={columns}
-      dataSource={data}
+      dataSource={dataSource}
       pagination={paginationConfig}
       onChange={onTableChange}
     />

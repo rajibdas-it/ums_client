@@ -7,10 +7,10 @@ import React from "react";
 
 const CreateDepartment = () => {
   const [addDepartment] = useAddDepartmentMutation();
+
   const createDepartmentHandler = async (data: any) => {
     message.loading("Createing...");
     try {
-      console.log(data);
       await addDepartment(data);
       message.success("Department created successfully");
     } catch (error: any) {

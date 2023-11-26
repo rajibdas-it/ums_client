@@ -15,9 +15,10 @@ const departmentApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.department],
     }),
     getDepartments: build.query({
-      query: () => ({
+      query: (arg) => ({
         url: DEPARTMENT_URL,
         method: "GET",
+        params: arg,
       }),
       transformResponse: (response: IDepartments, meta: IMeta) => {
         return {
