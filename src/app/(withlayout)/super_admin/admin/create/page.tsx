@@ -6,21 +6,45 @@ import FromSelectField from "@/components/form/FormSelectField";
 import FormTextArea from "@/components/form/FormTextArea";
 import From from "@/components/form/From";
 import UploadImage from "@/components/ui/UploadImage";
-import {
-  bloodGroupOptions,
-  departmentOptions,
-  genderOptions,
-} from "@/constants/global";
+import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import { useAddAdminMutation } from "@/redux/api/adminApi";
+import { useGetDepartmentsQuery } from "@/redux/api/departmentApi";
+import { IDepartments } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row, message } from "antd";
 import React from "react";
 
 const CreateAdminPage = () => {
-  const onSubmit = async (data: any) => {
+  const { data, isLoading } = useGetDepartmentsQuery({ limit: 100, page: 1 });
+
+  const [addAdmin] = useAddAdminMutation();
+  //@ts-ignore
+  const departments: IDepartments[] = data?.departments;
+  const departmentOptions =
+    departments &&
+    departments.map((department) => {
+      return {
+        label: department?.title,
+        value: department.id,
+      };
+    });
+
+  const onSubmit = async (values: any) => {
+    const obj = { ...values };
+
+    const file = obj["file"];
+    delete obj["file"];
+
+    const data = JSON.stringify(obj);
+    const formData = new FormData();
+    formData.append("file", file as Blob);
+    formData.append("data", data);
+    message.loading("creating....");
     try {
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+      await addAdmin(data);
+      message.success("Admin Created Successfully");
+    } catch (error: any) {
+      message.error(error);
     }
   };
   return (
@@ -116,7 +140,7 @@ const CreateAdminPage = () => {
                 />
               </Col>
               <Col className="gutter-row" span={8}>
-                <UploadImage />
+                <UploadImage name="file" />
               </Col>
             </Row>
           </div>

@@ -30,7 +30,7 @@ const FormDatePicker = ({ name, label, onChange, size }: UMDatePickerProps) => {
         render={({ field }) => (
           <DatePicker
             style={{ width: "100%" }}
-            value={dayjs(field.value) || ""}
+            defaultValue={dayjs(field.value) || ""}
             onChange={handleOnChange}
             size={size}
           />
