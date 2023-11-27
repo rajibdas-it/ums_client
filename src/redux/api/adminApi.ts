@@ -1,8 +1,9 @@
 import { url } from "inspector";
 import { tagTypes } from "../tags-types";
 import { baseApi } from "./baseApi";
+import { IAdmin, IMeta } from "@/types";
 
-const adminUrl = "/admins";
+const ADMIN_URL = "/admins";
 
 const adminApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -16,12 +17,20 @@ const adminApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.admin],
     }),
     getAdmins: build.query({
-      query: () => ({
-        url: adminUrl,
+      query: (arg) => ({
+        url: ADMIN_URL,
         method: "GET",
+        params: arg,
       }),
+      transformResponse: (response: IAdmin, meta: IMeta) => {
+        return {
+          admins: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.admin],
     }),
   }),
 });
 
-export const { useAddAdminMutation } = adminApi;
+export const { useAddAdminMutation, useGetAdminsQuery } = adminApi;

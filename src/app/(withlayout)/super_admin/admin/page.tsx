@@ -1,10 +1,6 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/UMTable";
-import {
-  useDeleteDepartmentMutation,
-  useGetDepartmentsQuery,
-} from "@/redux/api/departmentApi";
 import { Button, Input, message } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -15,8 +11,9 @@ import {
 } from "@ant-design/icons";
 import { useDebounced } from "@/redux/hooks";
 import dayjs, { Dayjs } from "dayjs";
+import { useGetAdminsQuery } from "@/redux/api/adminApi";
 
-const DepartmentPage = () => {
+const AdminPage = () => {
   const query: Record<string, any> = {};
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -38,30 +35,49 @@ const DepartmentPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading } = useGetDepartmentsQuery({ ...query });
-
-  const [deleteDepartment] = useDeleteDepartmentMutation();
-
-  const departments = data?.departments;
+  const { data, isLoading } = useGetAdminsQuery({ page: 1, limit: 100 });
+  const admins = data?.admins;
   const meta = data?.meta;
 
-  const handleDeleteDepartment = async (id: string) => {
-    message.loading("Deleting...");
-    try {
-      await deleteDepartment(id);
-      await message.success("Delete department successfully");
-    } catch (error: any) {
-      message.error(error);
-    }
-  };
+  // const handleDeleteDepartment = async (id: string) => {
+  //   message.loading("Deleting...");
+  //   try {
+  //     await deleteDepartment(id);
+  //     await message.success("Delete department successfully");
+  //   } catch (error: any) {
+  //     message.error(error);
+  //   }
+  // };
 
   const columns = [
     {
-      title: "title",
-      dataIndex: "title",
+      key: "id",
+      title: "ID",
+      dataIndex: "id",
       sorter: (a: any, b: any) => a.title - b.title,
     },
     {
+      key: "id",
+      title: "Name",
+      dataIndex: "name",
+      sorter: (a: any, b: any) => a.title - b.title,
+      render: function (data: Record<string, string>) {
+        const fullName = `${data?.firstName} ${data?.middleName} ${data?.lastName}`;
+        return <>{fullName}</>;
+      },
+    },
+    { key: "id", title: "Email", dataIndex: "email" },
+    {
+      key: "id",
+      title: "Department",
+      dataIndex: "managementDepartment",
+      render: function (data: Record<string, any>) {
+        return <>{data.title}</>;
+      },
+    },
+    { key: "id", title: "Contact No.", dataIndex: "contactNo" },
+    {
+      key: "id",
       title: "Created At",
       dataIndex: "createdAt",
       sorter: (a: any, b: any) => a.title - b.title,
@@ -69,8 +85,8 @@ const DepartmentPage = () => {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
     },
-
     {
+      key: "id",
       title: "Actions",
       render: function (data: Record<string, any>) {
         return (
@@ -80,13 +96,13 @@ const DepartmentPage = () => {
                 <EditOutlined />
               </Button>
             </Link>
-            <Button
+            {/* <Button
               onClick={() => handleDeleteDepartment(data?.id)}
               type="primary"
               danger
             >
               <DeleteOutlined />
-            </Button>
+            </Button> */}
           </>
         );
       },
@@ -111,7 +127,7 @@ const DepartmentPage = () => {
   };
   return (
     <div>
-      <ActionBar title="Deparment List">
+      <ActionBar title="Admin List">
         <Input
           type="text"
           size="large"
@@ -141,7 +157,7 @@ const DepartmentPage = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={departments}
+        dataSource={admins}
         pageSize={size}
         totalPage={meta?.total}
         showSizeChanger={true}
@@ -153,5 +169,4 @@ const DepartmentPage = () => {
   );
 };
 
-export default DepartmentPage;
-<h1>Department Page</h1>;
+export default AdminPage;
