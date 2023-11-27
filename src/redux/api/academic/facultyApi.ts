@@ -19,7 +19,7 @@ const academicFacultyApi = baseApi.injectEndpoints({
         url: ACADEMIC_FACULTY_URL,
         method: "GET",
       }),
-      transformResponse: (response: IAcademicFaculty, meta: IMeta) => {
+      transformResponse: (response: IAcademicFaculty[], meta: IMeta) => {
         return {
           faculties: response,
           meta,

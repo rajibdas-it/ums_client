@@ -21,7 +21,7 @@ const departmentApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      transformResponse: (response: IDepartments, meta: IMeta) => {
+      transformResponse: (response: IDepartments[], meta: IMeta) => {
         return {
           departments: response,
           meta,
