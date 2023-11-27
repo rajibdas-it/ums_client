@@ -46,18 +46,18 @@ const DepartmentPage = () => {
 
   const [deleteDepartment] = useDeleteDepartmentMutation();
 
-  const departments = data?.faculties;
+  const faculties = data?.faculties;
   const meta = data?.meta;
 
-  const handleDeleteDepartment = async (id: string) => {
-    message.loading("Deleting...");
-    try {
-      await deleteDepartment(id);
-      await message.success("Delete department successfully");
-    } catch (error: any) {
-      message.error(error);
-    }
-  };
+  // const handleDeleteDepartment = async (id: string) => {
+  //   message.loading("Deleting...");
+  //   try {
+  //     await deleteDepartment(id);
+  //     await message.success("Delete department successfully");
+  //   } catch (error: any) {
+  //     message.error(error);
+  //   }
+  // };
 
   const columns = [
     {
@@ -84,13 +84,13 @@ const DepartmentPage = () => {
                 <EditOutlined />
               </Button>
             </Link>
-            <Button
+            {/* <Button
               onClick={() => handleDeleteDepartment(data?.id)}
               type="primary"
               danger
             >
               <DeleteOutlined />
-            </Button>
+            </Button> */}
           </>
         );
       },
@@ -115,7 +115,7 @@ const DepartmentPage = () => {
   };
   return (
     <div>
-      <ActionBar title="Deparment List">
+      <ActionBar title="Faculty List">
         <Input
           type="text"
           size="large"
@@ -124,14 +124,14 @@ const DepartmentPage = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <div>
-          <Link href="/super_admin/department/create">
+          <Link href="/admin/academic/faculty/create">
             <Button
               type="primary"
               style={{
                 margin: "10px 5px",
               }}
             >
-              Create Department
+              Create Faculty
             </Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -145,7 +145,7 @@ const DepartmentPage = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={departments}
+        dataSource={faculties}
         pageSize={size}
         totalPage={meta?.total}
         showSizeChanger={true}

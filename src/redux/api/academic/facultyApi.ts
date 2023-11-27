@@ -16,7 +16,7 @@ const academicFacultyApi = baseApi.injectEndpoints({
     }),
     getAcaFaculties: build.query({
       query: () => ({
-        url: "",
+        url: ACADEMIC_FACULTY_URL,
         method: "GET",
       }),
       transformResponse: (response: IAcademicFaculty, meta: IMeta) => {
