@@ -17,7 +17,6 @@ const CreateDepartment = () => {
       await message.success("Department created successfully");
       router.push("/super_admin/department/");
     } catch (error: any) {
-      console.log(error);
       message.error(error);
     }
   };

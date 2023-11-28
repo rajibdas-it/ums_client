@@ -42,8 +42,6 @@ const DepartmentPage = () => {
 
   const { data, isLoading } = useGetAcaFacultiesQuery({ ...query });
 
-  console.log(data);
-
   const [deleteDepartment] = useDeleteDepartmentMutation();
 
   const faculties = data?.faculties;
@@ -115,7 +113,7 @@ const DepartmentPage = () => {
   };
   return (
     <div>
-      <ActionBar title="Faculty List">
+      <ActionBar title="Academic Faculty List">
         <Input
           type="text"
           size="large"

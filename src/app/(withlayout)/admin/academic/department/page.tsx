@@ -43,10 +43,9 @@ const DepartmentPage = () => {
 
   const { data, isLoading } = useGetAcaDepartmentsQuery({ ...query });
 
-  console.log(data);
   const academicDepartments = data?.academicDepartments;
   const meta = data?.meta;
-  const [deleteDepartment] = useDeleteDepartmentMutation();
+  // const [deleteDepartment] = useDeleteDepartmentMutation();
 
   // const handleDeleteDepartment = async (id: string) => {
   //   message.loading("Deleting...");
@@ -60,14 +59,17 @@ const DepartmentPage = () => {
 
   const columns = [
     {
-      title: "title",
+      title: "Department Name",
       dataIndex: "title",
       sorter: (a: any, b: any) => a.title - b.title,
     },
     {
       title: "Academic Faculty",
-      dataIndex: "title",
+      dataIndex: "academicFaculty",
       sorter: (a: any, b: any) => a.title - b.title,
+      render: function (data: any) {
+        return <>{data.title}</>;
+      },
     },
     {
       title: "Created At",

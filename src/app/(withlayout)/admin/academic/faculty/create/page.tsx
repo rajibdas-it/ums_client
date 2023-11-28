@@ -21,7 +21,6 @@ const CreateAcademicFaculty = () => {
         router.push("/admin/academic/faculty");
       }
     } catch (error: any) {
-      console.log(error);
       message.error(error);
     }
   };

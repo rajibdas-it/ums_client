@@ -26,7 +26,6 @@ const EditDepartment = ({ params }: IDProps) => {
       await message.success("Department updated successfully");
       router.push("/super_admin/department/");
     } catch (error: any) {
-      console.log(error);
       message.error(error);
     }
   };

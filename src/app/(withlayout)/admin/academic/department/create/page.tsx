@@ -19,8 +19,6 @@ const CreateAcademicFaculty = () => {
   const [addAcaDepartment] = useAddAcaDepartmentMutation();
   const faculties = data?.faculties;
 
-  console.log(faculties);
-
   const facultyData = faculties?.map((faculty: Record<string, any>) => {
     return {
       label: faculty?.title,
@@ -32,7 +30,6 @@ const CreateAcademicFaculty = () => {
   const [addAcaFaculty] = useAddAcaFacultyMutation();
 
   const createAcaFacultyHandler = async (data: any) => {
-    console.log(data);
     message.loading("Creating...");
     try {
       const res = await addAcaDepartment(data);
@@ -41,7 +38,6 @@ const CreateAcademicFaculty = () => {
         router.push("/admin/academic/department");
       }
     } catch (error: any) {
-      console.log(error);
       message.error(error);
     }
   };
