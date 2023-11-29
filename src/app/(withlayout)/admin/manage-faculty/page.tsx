@@ -38,8 +38,8 @@ const FacultyPage = () => {
 
   const { data, isLoading } = useGetFacultiesQuery({ ...query });
   console.log(data);
-  //   const admins = data?.admins;
-  //   const meta = data?.meta;
+  const faculties = data?.faculties;
+  const meta = data?.meta;
 
   // const handleDeleteDepartment = async (id: string) => {
   //   message.loading("Deleting...");
@@ -145,7 +145,7 @@ const FacultyPage = () => {
                 margin: "10px 5px",
               }}
             >
-              Create Admin
+              Create Faculty
             </Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -156,17 +156,17 @@ const FacultyPage = () => {
         </div>
       </ActionBar>
 
-      {/* <UMTable
+      <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={}
+        dataSource={faculties}
         pageSize={size}
-        totalPage={}
+        totalPage={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
         showPagination={true}
-      /> */}
+      />
     </div>
   );
 };

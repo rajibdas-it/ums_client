@@ -1,5 +1,7 @@
 "use client";
 import { adminSchema } from "@/Schemas/admin";
+import AcDepartmentField from "@/components/form/AcDepartmentField";
+import AcFacultyField from "@/components/form/AcFacultyField";
 import FormDatePicker from "@/components/form/FormDatePicker";
 import FormInput from "@/components/form/FormInput";
 import FromSelectField from "@/components/form/FormSelectField";
@@ -9,6 +11,7 @@ import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import { useAddAdminMutation } from "@/redux/api/adminApi";
 import { useGetDepartmentsQuery } from "@/redux/api/departmentApi";
+import { useAddFacultyMutation } from "@/redux/api/facultyApi";
 import { IDepartments } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row, message } from "antd";
@@ -17,7 +20,7 @@ import React from "react";
 const CreateFacultyPage = () => {
   const { data, isLoading } = useGetDepartmentsQuery({ limit: 100, page: 1 });
 
-  const [addAdmin] = useAddAdminMutation();
+  const [addFaculty] = useAddFacultyMutation();
   //@ts-ignore
   const departments: IDepartments[] = data?.departments;
   const departmentOptions =
@@ -41,7 +44,7 @@ const CreateFacultyPage = () => {
     formData.append("data", data);
     message.loading("creating....");
     try {
-      await addAdmin(data);
+      await addFaculty(data);
       message.success("Admin Created Successfully");
     } catch (error: any) {
       message.error(error);
@@ -52,7 +55,7 @@ const CreateFacultyPage = () => {
       <h1>Create Admin</h1>
 
       <div>
-        <From submitHandler={onSubmit} resolver={yupResolver(adminSchema)}>
+        <From submitHandler={onSubmit}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -62,7 +65,7 @@ const CreateFacultyPage = () => {
             }}
           >
             <p style={{ fontSize: "18px", marginBottom: "10px" }}>
-              Admin Information
+              Faculty Information
             </p>
             <Row gutter={{ sm: 8, md: 24 }}>
               <Col
@@ -72,7 +75,7 @@ const CreateFacultyPage = () => {
               >
                 <FormInput
                   type="text"
-                  name="admin.name.firstName"
+                  name="faculty.name.firstName"
                   size="large"
                   label="First Name"
                 />
@@ -84,7 +87,7 @@ const CreateFacultyPage = () => {
               >
                 <FormInput
                   type="text"
-                  name="admin.name.middleName"
+                  name="faculty.name.middleName"
                   size="large"
                   label="Middle Name"
                 />
@@ -96,7 +99,7 @@ const CreateFacultyPage = () => {
               >
                 <FormInput
                   type="text"
-                  name="admin.name.lastName"
+                  name="faculty.name.lastName"
                   size="large"
                   label="Last Name"
                 />
@@ -119,7 +122,7 @@ const CreateFacultyPage = () => {
                 style={{ marginBottom: "10px" }}
               >
                 <FromSelectField
-                  name="admin.gender"
+                  name="faculty.gender"
                   size="large"
                   label="Gender"
                   options={genderOptions}
@@ -131,12 +134,19 @@ const CreateFacultyPage = () => {
                 span={8}
                 style={{ marginBottom: "10px" }}
               >
-                <FromSelectField
-                  name="admin.managementDepartment"
-                  size="large"
-                  label="Department"
-                  options={departmentOptions}
-                  placeholder="select Department"
+                <AcFacultyField
+                  name="faculty.academicFaculty"
+                  label="Academic Faculty"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{ marginBottom: "10px" }}
+              >
+                <AcDepartmentField
+                  name="faculty.academicDepartment"
+                  label="Academic Department"
                 />
               </Col>
               <Col className="gutter-row" span={8}>
@@ -164,7 +174,7 @@ const CreateFacultyPage = () => {
               >
                 <FormInput
                   type="email"
-                  name="admin.email"
+                  name="faculty.email"
                   size="large"
                   label="Email"
                 />
@@ -176,7 +186,7 @@ const CreateFacultyPage = () => {
               >
                 <FormInput
                   type="text"
-                  name="admin.contactNo"
+                  name="faculty.contactNo"
                   size="large"
                   label="Contact No"
                 />
@@ -188,7 +198,7 @@ const CreateFacultyPage = () => {
               >
                 <FormInput
                   type="text"
-                  name="admin.emergencyContactNo"
+                  name="faculty.emergencyContactNo"
                   size="large"
                   label="Emergency Contact No"
                 />
@@ -199,7 +209,7 @@ const CreateFacultyPage = () => {
                 style={{ marginBottom: "10px", width: "100%" }}
               >
                 <FormDatePicker
-                  name="admin.dateOfBirth"
+                  name="faculty.dateOfBirth"
                   size="large"
                   label="Date of Birth"
                 />
@@ -211,7 +221,7 @@ const CreateFacultyPage = () => {
                 style={{ marginBottom: "10px" }}
               >
                 <FromSelectField
-                  name="admin.bloodGroup"
+                  name="faculty.bloodGroup"
                   size="large"
                   label="Blood Group"
                   options={bloodGroupOptions}
@@ -225,7 +235,7 @@ const CreateFacultyPage = () => {
               >
                 <FormInput
                   type="text"
-                  name="admin.designation"
+                  name="faculty.designation"
                   size="large"
                   label="Designation"
                 />
@@ -236,7 +246,7 @@ const CreateFacultyPage = () => {
                 style={{ marginBottom: "10px" }}
               >
                 <FormTextArea
-                  name="admin.presentAddress"
+                  name="faculty.presentAddress"
                   label="Present Address"
                   rows={4}
                 />
@@ -247,7 +257,7 @@ const CreateFacultyPage = () => {
                 style={{ marginBottom: "10px" }}
               >
                 <FormTextArea
-                  name="admin.parmanentAddress"
+                  name="faculty.parmanentAddress"
                   label="Permanent Address"
                   rows={4}
                 />

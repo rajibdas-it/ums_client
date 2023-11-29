@@ -1,10 +1,9 @@
 import { METHOD } from "@/enum/method";
 import { baseApi } from "./baseApi";
 import { tagTypes } from "../tags-types";
-import { url } from "inspector";
 import { IFaculty, IMeta } from "@/types";
 
-const FACULTY_URL = "/faculty";
+const FACULTY_URL = "/faculties";
 
 const facultyApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
